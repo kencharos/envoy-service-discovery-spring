@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package my.sdtest.backend1;
+
+
+option java_multiple_files = true;
+option java_package = "my.sdtest.backend1";
+
+// The greeting service definition.
+service Backend1Service {
+    rpc HelloBackend1 (B1Request) returns (B1Response) {}
+}
+
+message B1Request {
+    string message = 1;
+}
+
+// range input
+message B1Response {
+    string answer = 1;
+}
