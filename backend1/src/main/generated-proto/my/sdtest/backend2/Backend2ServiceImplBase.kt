@@ -1,6 +1,6 @@
-package my.sdtest.backend1
+package my.sdtest.backend2
 
-import my.sdtest.backend1.Backend1ServiceGrpc.*
+import my.sdtest.backend2.Backend2ServiceGrpc.*
 
 import io.grpc.*
 import io.grpc.stub.*
@@ -10,17 +10,13 @@ import kotlin.coroutines.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 
-/**
-     * <pre>
-     *  The greeting service definition.
-     * <pre>
-     */
+
 
 @javax.annotation.Generated(
     value = ["by gRPC Kotlin generator"],
-    comments = "Source: backend1.proto"
+    comments = "Source: backend2.proto"
 )
-abstract class Backend1ServiceImplBase(
+abstract class Backend2ServiceImplBase(
     coroutineContext: CoroutineContext = Dispatchers.Default
 ) : BindableService, CoroutineScope {
 
@@ -32,17 +28,17 @@ abstract class Backend1ServiceImplBase(
     
     
     
-    open suspend fun helloBackend1(request: my.sdtest.backend1.B1Request): my.sdtest.backend1.B1Response {
-        throw unimplemented(getHelloBackend1Method()).asRuntimeException()
+    open suspend fun helloBackend2(request: my.sdtest.backend2.B2Request): my.sdtest.backend2.B2Response {
+        throw unimplemented(getHelloBackend2Method()).asRuntimeException()
     }
 
-    internal fun helloBackend1Internal(
-        request: my.sdtest.backend1.B1Request,
-        responseObserver: StreamObserver<my.sdtest.backend1.B1Response>
+    internal fun helloBackend2Internal(
+        request: my.sdtest.backend2.B2Request,
+        responseObserver: StreamObserver<my.sdtest.backend2.B2Response>
     ) {
         launch {
             tryCatchingStatus(responseObserver) {
-                val response = helloBackend1(request)
+                val response = helloBackend2(request)
                 onNext(response)
             }
         }
@@ -50,17 +46,17 @@ abstract class Backend1ServiceImplBase(
     
     
     
-    open suspend fun helloBackend1Stream(requests: ReceiveChannel<my.sdtest.backend1.B1Request>): ReceiveChannel<my.sdtest.backend1.B1Response> {
-        throw unimplemented(getHelloBackend1StreamMethod()).asRuntimeException()
+    open suspend fun helloBackend2Stream(requests: ReceiveChannel<my.sdtest.backend2.B2Request>): ReceiveChannel<my.sdtest.backend2.B2Response> {
+        throw unimplemented(getHelloBackend2StreamMethod()).asRuntimeException()
     }
 
-    internal fun helloBackend1StreamInternal(
-        responseObserver: StreamObserver<my.sdtest.backend1.B1Response>
-    ): StreamObserver<my.sdtest.backend1.B1Request> {
-        val requests = StreamObserverChannel<my.sdtest.backend1.B1Request>()
+    internal fun helloBackend2StreamInternal(
+        responseObserver: StreamObserver<my.sdtest.backend2.B2Response>
+    ): StreamObserver<my.sdtest.backend2.B2Request> {
+        val requests = StreamObserverChannel<my.sdtest.backend2.B2Request>()
         launch {
             tryCatchingStatus(responseObserver) {
-                val responses = helloBackend1Stream(requests)
+                val responses = helloBackend2Stream(requests)
                 for (response in responses) {
                     onNext(response)
                 }
@@ -72,15 +68,15 @@ abstract class Backend1ServiceImplBase(
     override fun bindService(): ServerServiceDefinition {
         return ServerServiceDefinition.builder(getServiceDescriptor())
             .addMethod(
-                getHelloBackend1Method(),
+                getHelloBackend2Method(),
                 ServerCalls.asyncUnaryCall(
-                    MethodHandlers(METHODID_HELLO_BACKEND1)
+                    MethodHandlers(METHODID_HELLO_BACKEND2)
                 )
             )
             .addMethod(
-                getHelloBackend1StreamMethod(),
+                getHelloBackend2StreamMethod(),
                 ServerCalls.asyncBidiStreamingCall(
-                    MethodHandlers(METHODID_HELLO_BACKEND1STREAM)
+                    MethodHandlers(METHODID_HELLO_BACKEND2STREAM)
                 )
             )
             .build()
@@ -120,8 +116,8 @@ abstract class Backend1ServiceImplBase(
         }
     }
 
-    private val METHODID_HELLO_BACKEND1 = 0
-    private val METHODID_HELLO_BACKEND1STREAM = 1
+    private val METHODID_HELLO_BACKEND2 = 0
+    private val METHODID_HELLO_BACKEND2STREAM = 1
 
     private inner class MethodHandlers<Req, Resp> internal constructor(
         private val methodId: Int
@@ -133,10 +129,10 @@ abstract class Backend1ServiceImplBase(
         @Suppress("UNCHECKED_CAST")
         override fun invoke(request: Req, responseObserver: StreamObserver<Resp>) {
             when (methodId) {
-                METHODID_HELLO_BACKEND1 ->
-                    this@Backend1ServiceImplBase.helloBackend1Internal(
-                        request as my.sdtest.backend1.B1Request,
-                        responseObserver as StreamObserver<my.sdtest.backend1.B1Response>
+                METHODID_HELLO_BACKEND2 ->
+                    this@Backend2ServiceImplBase.helloBackend2Internal(
+                        request as my.sdtest.backend2.B2Request,
+                        responseObserver as StreamObserver<my.sdtest.backend2.B2Response>
                     )
                 else -> throw AssertionError()
             }
@@ -145,9 +141,9 @@ abstract class Backend1ServiceImplBase(
         @Suppress("UNCHECKED_CAST")
         override fun invoke(responseObserver: StreamObserver<Resp>): StreamObserver<Req> {
             when (methodId) {
-                METHODID_HELLO_BACKEND1STREAM ->
-                    return this@Backend1ServiceImplBase.helloBackend1StreamInternal(
-                        responseObserver as StreamObserver<my.sdtest.backend1.B1Response>
+                METHODID_HELLO_BACKEND2STREAM ->
+                    return this@Backend2ServiceImplBase.helloBackend2StreamInternal(
+                        responseObserver as StreamObserver<my.sdtest.backend2.B2Response>
                     ) as StreamObserver<Req>
                 else -> throw AssertionError()
             }

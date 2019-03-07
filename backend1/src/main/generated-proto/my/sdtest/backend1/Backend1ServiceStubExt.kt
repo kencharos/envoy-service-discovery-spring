@@ -21,3 +21,11 @@ inline suspend fun Backend1ServiceStub.helloBackend1(request: my.sdtest.backend1
         helloBackend1(request, ContinuationStreamObserver(it))
     }
 }
+
+
+
+fun Backend1ServiceStub.helloBackend1Stream(): ManyToManyCall<my.sdtest.backend1.B1Request, my.sdtest.backend1.B1Response> {
+    val responseChannel = StreamObserverChannel<my.sdtest.backend1.B1Response>()
+    val requestObserver = helloBackend1Stream(responseChannel)
+    return ManyToManyCall(requestObserver, responseChannel)
+}
