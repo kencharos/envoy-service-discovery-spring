@@ -1,0 +1,33 @@
+version: '2'
+services:
+  front-app:
+    build:
+      context: ./front
+    image: front-app:latest
+    container_name: front-app
+    environment:
+      - "GRPC_BACKEND1_HOST=backend1-app"
+      - "GRPC_BACKEND1_PORT=6566"
+      - "GRPC_BACKEND2_HOST=backend2-app"
+      - "GRPC_BACKEND2_PORT=6567"
+    ports:
+      - "8080:8080"
+  backend1-app:
+    build:
+      context: ./backend1
+    image: backend1-app:latest
+    container_name: backend1-app
+    environment:
+      - "GRPC_BACKEND2_HOST=backend2-app"
+      - "GRPC_BACKEND2_PORT=6567"
+    ports:
+      - "8081:8081"
+      - "6566:6566"
+  backend2-app:
+    build:
+      context: ./backend2
+    image: backend2-app:latest
+    container_name: backend2-app
+    ports:
+      - "8082:8082"
+      - "6567:6567"

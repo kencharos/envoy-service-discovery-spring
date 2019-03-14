@@ -11,7 +11,7 @@ import org.lognet.springboot.grpc.GRpcService
 class Backend2Service(val backend2Stub:Backend2StubManager) : Backend1ServiceImplBase() {
 
     override suspend fun helloBackend1(request: B1Request): B1Response {
-
+        println("CALL BACKEND1")
         val res = backend2Stub.stub().helloBackend2(B2Request.newBuilder().setMessage(request.message).build())
 
         return B1Response.newBuilder().setAnswer("[Backend1 ${res.answer}]").build()
@@ -22,6 +22,5 @@ class Backend2Service(val backend2Stub:Backend2StubManager) : Backend1ServiceImp
         for(req in requests) {
             send(B1Response.newBuilder().setAnswer("Hello1 ${req.message}").build())
         }
-
     }
 }

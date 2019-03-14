@@ -25,8 +25,8 @@ class Backend2StubManager(val host:String, val port:Int) {
 class AppConfiguration {
 
     @Bean
-    fun backend2Client(@Value("\${backend2.host}") host:String,
-                @Value("\${backend2.port}") port:Int): Backend2StubManager {
+    fun backend2Client(@Value("\${grpc.backend2.host}") host:String,
+                @Value("\${grpc.backend2.port}") port:Int): Backend2StubManager {
         return Backend2StubManager(host, port)
     }
 

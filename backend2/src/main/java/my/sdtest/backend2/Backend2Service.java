@@ -10,6 +10,7 @@ public class Backend2Service extends ReactorBackend2ServiceGrpc.Backend2ServiceI
 
     @Override
     public Mono<B2Response> helloBackend2(Mono<B2Request> request) {
+        System.out.println("CALL BACKEND2");
         return request.map(r -> B2Response.newBuilder().setAnswer("[Backend2 Hello " + r.getMessage() + "]").build());
     }
 
