@@ -1,0 +1,113 @@
+static_resources:
+  listeners:
+  - address:
+      socket_address: # ingress(外部からのアクセスの設定)
+        address: 0.0.0.0
+        port_value: 3000
+    filter_chains:
+    - filters:
+      - name: envoy.http_connection_manager
+        config:
+          codec_type: auto
+          stat_prefix: ingress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: service
+              domains:
+              - "*"
+              routes:
+              - match:
+                  prefix: "/"
+                route:
+                  cluster: local_service
+          access_log:
+          - name: envoy.file_access_log
+            config:
+              path: "/dev/stdout"
+          http_filters:
+          - name: envoy.router
+            config: {}
+  - address:
+      socket_address: #egress (frontからバックエンドへの通信の設定)
+        address: 0.0.0.0 # 本当なら localhost
+        port_value: 8000
+    filter_chains:
+    - filters:
+      - name: envoy.http_connection_manager
+        config:
+          codec_type: auto
+          stat_prefix: egress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: backend
+              domains:
+              - "*"
+              routes:
+              - match:
+                  prefix: "/my.sdtest.backend1.Backend1Service"
+                route:
+                  cluster: backend1
+              - match:
+                  prefix: "/my.sdtest.backend2.Backend2Service"
+                route:
+                  cluster: backend2
+          access_log:
+          - name: envoy.file_access_log
+            config:
+              path: "/dev/stdout"
+          http_filters:
+          - name: envoy.router
+            config: {}
+  clusters:
+  - name: local_service
+    connect_timeout: 0.25s
+    type: STRICT_DNS
+    lb_policy: round_robin
+    health_checks:
+    - timeout: 5s
+      interval: 10s
+      unhealthy_threshold: 2
+      healthy_threshold: 2
+      tcp_health_check: {}
+    hosts:
+    - socket_address:
+        address: front-app
+        port_value: 8080
+  - name: backend1
+    http2_protocol_options: {}
+    connect_timeout: 0.25s
+    type: STRICT_DNS 
+    lb_policy: round_robin
+    health_checks:
+    - timeout: 5s
+      interval: 10s
+      unhealthy_threshold: 2
+      healthy_threshold: 2
+      tcp_health_check: {}
+    hosts:  #この辺を動的にしたい
+    - socket_address: 
+        address: backend1-app
+        port_value: 6566
+  - name: backend2
+    http2_protocol_options: {}
+    connect_timeout: 0.25s
+    type: STRICT_DNS 
+    lb_policy: round_robin
+    health_checks:
+    - timeout: 5s
+      interval: 10s
+      unhealthy_threshold: 2
+      healthy_threshold: 2
+      tcp_health_check: {}
+    hosts:  #この辺を動的にしたい
+    - socket_address: 
+        address: backend2-app
+        port_value: 6567
+admin:
+  access_log_path: /dev/null
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 10001

@@ -5,13 +5,22 @@ services:
       context: ./front
     image: front-app:latest
     container_name: front-app
-    environment:
-      - "GRPC_BACKEND1_HOST=backend1-app"
-      - "GRPC_BACKEND1_PORT=6566"
-      - "GRPC_BACKEND2_HOST=backend2-app"
-      - "GRPC_BACKEND2_PORT=6567"
+    environment: #envoyのegressをさす
+      - "GRPC_BACKEND1_HOST=front-proxy"
+      - "GRPC_BACKEND1_PORT=8000"
+      - "GRPC_BACKEND2_HOST=front-proxy"
+      - "GRPC_BACKEND2_PORT=8000"
     ports:
       - "8080:8080"
+  front-proxy:
+    build:
+      context: ./front-proxy
+    image: front-proxy:latest
+    container_name: front-proxy
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+      - "10001:10001"
   backend1-app:
     build:
       context: ./backend1
