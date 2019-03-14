@@ -1,0 +1,9 @@
+
+server.port: 8080
+grpc:
+  backend1:
+    host: 127.0.0.1
+    port: 6566
+  backend2:
+    host: 127.0.0.1
+    port: 6567

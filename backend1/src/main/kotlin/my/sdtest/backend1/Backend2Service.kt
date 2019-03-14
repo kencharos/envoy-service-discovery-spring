@@ -14,7 +14,7 @@ class Backend2Service(val backend2Stub:Backend2StubManager) : Backend1ServiceImp
 
         val res = backend2Stub.stub().helloBackend2(B2Request.newBuilder().setMessage(request.message).build())
 
-        return B1Response.newBuilder().setAnswer("[Hello wrraped ${res.answer}").build()
+        return B1Response.newBuilder().setAnswer("[Backend1 ${res.answer}]").build()
     }
 
     override suspend fun helloBackend1Stream(requests: ReceiveChannel<B1Request>) = produce<B1Response> {
