@@ -1,15 +1,24 @@
 package my.sdtest.backend2
 
-import my.sdtest.backend2.Backend2ServiceGrpc.*
-
-import io.grpc.*
-import io.grpc.stub.*
-import io.rouz.grpc.*
-
-import kotlin.coroutines.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.*
-
+import io.grpc.BindableService
+import io.grpc.MethodDescriptor
+import io.grpc.ServerServiceDefinition
+import io.grpc.Status
+import io.grpc.StatusException
+import io.grpc.StatusRuntimeException
+import io.grpc.stub.ServerCalls
+import io.grpc.stub.StreamObserver
+import io.rouz.grpc.ContextCoroutineContextElement
+import io.rouz.grpc.StreamObserverChannel
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.launch
+import my.sdtest.backend2.Backend2ServiceGrpc.getHelloBackend2Method
+import my.sdtest.backend2.Backend2ServiceGrpc.getHelloBackend2StreamMethod
+import my.sdtest.backend2.Backend2ServiceGrpc.getServiceDescriptor
+import kotlin.coroutines.CoroutineContext
 
 
 @javax.annotation.Generated(

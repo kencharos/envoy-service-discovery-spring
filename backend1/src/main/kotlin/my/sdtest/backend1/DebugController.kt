@@ -1,17 +1,27 @@
 package my.sdtest.backend1
 
 import io.grpc.ManagedChannelBuilder
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.reactor.mono
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import reactor.core.publisher.Flux
-import reactor.core.publisher.toFlux
-import kotlinx.coroutines.*
 import reactor.core.publisher.Mono
-import reactor.core.publisher.toMono
 
 @RestController
 class DebugController {
+
+    @GetMapping("/api/debug1")
+    fun hello1():Mono<String> = GlobalScope.mono {
+        val chan = ManagedChannelBuilder
+                .forAddress("localhost", 6566)
+                .usePlaintext()
+                .build()
+
+        val stub = Backend1ServiceGrpc.newStub(chan)
+
+        stub.helloBackend1(B1Request.newBuilder().setMessage("Test").build()).answer
+    }
 
     @GetMapping("/api/debug")
     fun sulocalGrpcConnectTest():Mono<List<String>> = GlobalScope.mono {
