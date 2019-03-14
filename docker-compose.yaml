@@ -41,9 +41,9 @@ services:
       context: ./backend1
     image: backend1-app:latest
     container_name: backend1-app
-    environment: # 自分のsidecarのipでOK ??
-      - "GRPC_BACKEND2_HOST=backend2-proxy"
-      - "GRPC_BACKEND2_PORT=3002"
+    environment: # 自分のsidecarのipでOK 
+      - "GRPC_BACKEND2_HOST=backend1-proxy"
+      - "GRPC_BACKEND2_PORT=8001"
     ports:
       - "8081:8081"
       - "6566:6566"
