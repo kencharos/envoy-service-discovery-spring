@@ -16,16 +16,12 @@ import reactor.core.publisher.Mono;
 @RestController
 public class ApiController {
     @Autowired
-    @Qualifier("backend1")
-    private ChannelManager backend1;
-    @Autowired
-    @Qualifier("backend2")
-    private ChannelManager backend2;
+    private ChannelManager backend;
 
     @GetMapping("/api/hello1/{name}")
     public Mono<String> hello1(@PathVariable("name") String name) {
 
-        var stub = ReactorBackend1ServiceGrpc.newReactorStub(backend1.get());
+        var stub = ReactorBackend1ServiceGrpc.newReactorStub(backend.get());
 
         return stub.helloBackend1(B1Request.newBuilder().setMessage(name).build())
                 .map(r -> r.getAnswer());
@@ -35,7 +31,7 @@ public class ApiController {
     @GetMapping("/api/hello2/{name}")
     public Mono<String> hello2(@PathVariable("name") String name) {
 
-        var stub = ReactorBackend2ServiceGrpc.newReactorStub(backend2.get());
+        var stub = ReactorBackend2ServiceGrpc.newReactorStub(backend.get());
 
         return stub.helloBackend2(B2Request.newBuilder().setMessage(name).build())
                    .map(r -> r.getAnswer());

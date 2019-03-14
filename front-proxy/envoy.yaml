@@ -75,7 +75,7 @@ static_resources:
     - socket_address:
         address: front-app
         port_value: 8080
-  - name: backend1
+  - name: backend1 #backend1,2は各envoyで共通にできそう
     http2_protocol_options: {}
     connect_timeout: 0.25s
     type: STRICT_DNS 
@@ -88,8 +88,8 @@ static_resources:
       tcp_health_check: {}
     hosts:  #この辺を動的にしたい
     - socket_address: 
-        address: backend1-app
-        port_value: 6566
+        address: backend1-proxy
+        port_value: 3001
   - name: backend2
     http2_protocol_options: {}
     connect_timeout: 0.25s
@@ -103,8 +103,8 @@ static_resources:
       tcp_health_check: {}
     hosts:  #この辺を動的にしたい
     - socket_address: 
-        address: backend2-app
-        port_value: 6567
+        address: backend2-proxy
+        port_value: 3002
 admin:
   access_log_path: /dev/null
   address:

@@ -12,15 +12,10 @@ public class FrontApplication {
         SpringApplication.run(FrontApplication.class, args);
     }
 
-    @Bean("backend1")
-    public ChannelManager backend1(@Value("${grpc.backend1.host}") String host,
-                                   @Value("${grpc.backend1.port}") int port) {
+    @Bean
+    public ChannelManager backend(@Value("${grpc.host}") String host,
+                                   @Value("${grpc.port}") int port) {
         return new ChannelManager(host, port);
     }
 
-    @Bean("backend2")
-    public ChannelManager backend2(@Value("${grpc.backend2.host}") String host,
-                                   @Value("${grpc.backend2.port}") int port) {
-        return new ChannelManager(host, port);
-    }
 }
