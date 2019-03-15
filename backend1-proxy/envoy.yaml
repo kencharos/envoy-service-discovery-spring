@@ -106,3 +106,6 @@ static_resources:
     - socket_address: 
         address: backend2-proxy
         port_value: 3002
+    - socket_address: 
+        address: backend2-proxy-b
+        port_value: 3003

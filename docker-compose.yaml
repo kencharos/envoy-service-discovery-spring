@@ -9,23 +9,6 @@ services:
       - "3000:3000"
       - "8000:8000"
       - "10001:10001"
-  backend1-proxy:
-    build:
-      context: ./backend1-proxy
-    image: backend1-proxy:latest
-    container_name: backend1-proxy
-    ports:
-      - "3001:3001"
-      - "8001:8001"
-  backend2-proxy:
-    build:
-      context: ./backend2-proxy
-    image: backend2-proxy:latest
-    container_name: backend2-proxy
-    ports:
-      - "3002:3002"
-      - "8002:8002"
-
   front-app:
     build:
       context: ./front
@@ -36,6 +19,15 @@ services:
       - "GRPC_PORT=8000"
     ports:
       - "8080:8080"
+
+  backend1-proxy:
+    build:
+      context: ./backend1-proxy
+    image: backend1-proxy:latest
+    container_name: backend1-proxy
+    ports:
+      - "3001:3001"
+      - "8001:8001"
   backend1-app:
     build:
       context: ./backend1
@@ -47,6 +39,16 @@ services:
     ports:
       - "8081:8081"
       - "6566:6566"
+
+
+  backend2-proxy:
+    build:
+      context: ./backend2-proxy
+    image: backend2-proxy:latest
+    container_name: backend2-proxy
+    ports:
+      - "3002:3002"
+      - "8002:8002"
   backend2-app:
     build:
       context: ./backend2
@@ -55,3 +57,24 @@ services:
     ports:
       - "8082:8082"
       - "6567:6567"
+
+
+  backend2-proxy-b:
+    build:
+      context: ./backend2-proxy-b
+    image: backend2-proxy-b:latest
+    container_name: backend2-proxy-b
+    ports:
+      - "3003:3003"
+      - "8003:8003"
+  backend2-app-b:
+    build:
+      context: ./backend2
+    image: backend2-app:latest
+    container_name: backend2-app-b
+    environment: 
+      - "SERVER_PORT=8083"
+      - "GRPC_PORT=6568"
+    ports:
+      - "8083:8083"
+      - "6568:6568"

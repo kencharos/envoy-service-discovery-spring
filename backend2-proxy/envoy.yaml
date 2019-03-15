@@ -28,6 +28,38 @@ static_resources:
           http_filters:
           - name: envoy.router
             config: {}
+  - address:
+      socket_address: #egress (別バックエンドへの通信。全てのサービスにあっても良いはず)
+        address: 0.0.0.0 # 本当なら localhost
+        port_value: 8002
+    filter_chains:
+    - filters:
+      - name: envoy.http_connection_manager
+        config:
+          codec_type: auto
+          stat_prefix: egress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: backend
+              domains:
+              - "*"
+              routes:
+              - match:
+                  prefix: "/my.sdtest.backend1.Backend1Service"
+                route:
+                  cluster: backend1
+              - match:
+                  prefix: "/my.sdtest.backend2.Backend2Service"
+                route:
+                  cluster: backend2
+          access_log:
+          - name: envoy.file_access_log
+            config:
+              path: "/dev/stdout"
+          http_filters:
+          - name: envoy.router
+            config: {}
   clusters:
   - name: local_service
     http2_protocol_options: {}
@@ -44,3 +76,37 @@ static_resources:
     - socket_address:
         address: backend2-app
         port_value: 6567
+
+  - name: backend1 #backend1,2は各envoyで共通にできそう
+    http2_protocol_options: {}
+    connect_timeout: 0.25s
+    type: STRICT_DNS 
+    lb_policy: round_robin
+    health_checks:
+    - timeout: 5s
+      interval: 10s
+      unhealthy_threshold: 2
+      healthy_threshold: 2
+      tcp_health_check: {}
+    hosts:  #この辺を動的にしたい
+    - socket_address: 
+        address: backend1-proxy
+        port_value: 3001
+  - name: backend2
+    http2_protocol_options: {}
+    connect_timeout: 0.25s
+    type: STRICT_DNS 
+    lb_policy: round_robin
+    health_checks:
+    - timeout: 5s
+      interval: 10s
+      unhealthy_threshold: 2
+      healthy_threshold: 2
+      tcp_health_check: {}
+    hosts:  #この辺を動的にしたい
+    - socket_address: 
+        address: backend2-proxy
+        port_value: 3002
+    - socket_address: 
+        address: backend2-proxy-b
+        port_value: 3003
