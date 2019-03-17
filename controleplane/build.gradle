@@ -17,7 +17,6 @@ apply plugin: 'com.google.protobuf'
 apply plugin: "idea"
 
 
-def reactiveGrpcVersion = '0.9.0'
 def grpcVersion = '1.18.0'
 def protobufVersion = '3.6.1'
 
@@ -31,13 +30,13 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    //runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 
     compile "com.google.protobuf:protobuf-java:${protobufVersion}"
-    compile "com.salesforce.servicelibs:reactor-grpc-stub:${reactiveGrpcVersion}"
     compile "io.grpc:grpc-stub:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "io.grpc:grpc-netty:${grpcVersion}"
+    compile 'io.github.lognet:grpc-spring-boot-starter:3.1.0'
 
     // https://mvnrepository.com/artifact/io.envoyproxy.controlplane/java-control-plane
     compile group: 'io.envoyproxy.controlplane', name: 'java-control-plane', version: '0.1.14', ext: 'pom'
@@ -68,9 +67,6 @@ protobuf {
         grpc {
             artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
         }
-        reactor {
-            artifact = "com.salesforce.servicelibs:reactor-grpc:${reactiveGrpcVersion}:jdk8@jar"
-        }
     }
     generateProtoTasks {
 
@@ -82,11 +78,6 @@ protobuf {
             }
             task.plugins {
                 grpc {
-                    outputSubDir = 'generated-proto'
-                }
-            }
-            task.plugins {
-                reactor {
                     outputSubDir = 'generated-proto'
                 }
             }

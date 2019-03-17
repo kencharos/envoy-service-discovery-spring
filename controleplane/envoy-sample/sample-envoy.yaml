@@ -1,4 +1,4 @@
-node:
+node: # this can override args with  --service-node sample-node --service-cluster sample-proxy
   id: node0
   cluster: cluster.local
 

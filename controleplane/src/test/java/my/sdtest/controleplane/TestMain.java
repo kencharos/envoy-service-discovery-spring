@@ -7,8 +7,12 @@ import io.envoyproxy.controlplane.cache.Snapshot;
 import io.envoyproxy.controlplane.server.DiscoveryServer;
 import io.envoyproxy.envoy.api.v2.Cluster;
 import io.envoyproxy.envoy.api.v2.Cluster.DiscoveryType;
+import io.envoyproxy.envoy.api.v2.ClusterLoadAssignment;
 import io.envoyproxy.envoy.api.v2.core.Address;
 import io.envoyproxy.envoy.api.v2.core.SocketAddress;
+import io.envoyproxy.envoy.api.v2.endpoint.Endpoint;
+import io.envoyproxy.envoy.api.v2.endpoint.LbEndpoint;
+import io.envoyproxy.envoy.api.v2.endpoint.LocalityLbEndpoints;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.netty.NettyServerBuilder;
@@ -19,26 +23,44 @@ public class TestMain {
 
   private static final String GROUP = "key";
 
+  private static Endpoint endpoint(String host, int port) {
+    return Endpoint.newBuilder().setAddress(
+            Address.newBuilder().setSocketAddress(
+                    SocketAddress.newBuilder().setAddress(host).setPortValue(port)).build()
+    ).build();
+  }
+
+
   /**
    * Example minimal xDS implementation using the java-control-plane lib.
    *
    * @param arg command-line args
    */
   public static void main(String[] arg) throws IOException, InterruptedException {
-    SimpleCache<String> cache = new SimpleCache<>(node -> GROUP);
+    SimpleCache<String> cache = new SimpleCache<>(node -> {
+      System.out.println(node.getCluster());
+      System.out.println(node.getId());
+      return GROUP;
+    });
 
     cache.setSnapshot(
         GROUP,
         Snapshot.create(
-            ImmutableList.of(
-                Cluster.newBuilder()
-                    .setName("backend1")
-                    .setConnectTimeout(Duration.newBuilder().setSeconds(5))
-                    .setType(DiscoveryType.STATIC)
-                    .addHosts(Address.newBuilder()
-                        .setSocketAddress(SocketAddress.newBuilder().setAddress("127.0.0.1").setPortValue(1234)))
-                    .build()),
             ImmutableList.of(),
+            ImmutableList.of(
+                    ClusterLoadAssignment.newBuilder()
+                                         .setClusterName("backend1")
+                                         .addEndpoints(
+                                                 LocalityLbEndpoints.newBuilder().addLbEndpoints(
+                                                 LbEndpoint.newBuilder().setEndpoint(endpoint("127.0.0.1", 2000))))
+                                         .build(),
+                    ClusterLoadAssignment.newBuilder()
+                                         .setClusterName("backend2")
+                                         .addEndpoints(
+                                                 LocalityLbEndpoints.newBuilder().addLbEndpoints(
+                                                         LbEndpoint.newBuilder().setEndpoint(endpoint("127.0.0.1", 2000))))
+                                         .build()
+            ),
             ImmutableList.of(),
             ImmutableList.of(),
             ImmutableList.of(),
@@ -47,11 +69,12 @@ public class TestMain {
     DiscoveryServer discoveryServer = new DiscoveryServer(cache);
 
     ServerBuilder builder = NettyServerBuilder.forAddress(new InetSocketAddress("0.0.0.0", 6000))
-        .addService(discoveryServer.getAggregatedDiscoveryServiceImpl())
-        .addService(discoveryServer.getClusterDiscoveryServiceImpl())
+        //.addService(discoveryServer.getAggregatedDiscoveryServiceImpl())
+        //.addService(discoveryServer.getClusterDiscoveryServiceImpl())
         .addService(discoveryServer.getEndpointDiscoveryServiceImpl())
-        .addService(discoveryServer.getListenerDiscoveryServiceImpl())
-        .addService(discoveryServer.getRouteDiscoveryServiceImpl());
+        //.addService(discoveryServer.getListenerDiscoveryServiceImpl())
+        //.addService(discoveryServer.getRouteDiscoveryServiceImpl())
+    ;
 
     Server server = builder.build();
 
@@ -70,22 +93,22 @@ public class TestMain {
       cache.setSnapshot(
               GROUP,
               Snapshot.create(
-                      ImmutableList.of(
-                              Cluster.newBuilder()
-                                     .setName("backend1")
-                                     .setConnectTimeout(Duration.newBuilder().setSeconds(5))
-                                     .setType(DiscoveryType.STATIC)
-                                     .addHosts(Address.newBuilder()
-                                                      .setSocketAddress(SocketAddress.newBuilder().setAddress("127.0.0.1").setPortValue(6000+i)))
-                                     .build(),
-                              Cluster.newBuilder()
-                                     .setName("backend2")
-                                     .setConnectTimeout(Duration.newBuilder().setSeconds(5))
-                                     .setType(DiscoveryType.STATIC)
-                                     .addHosts(Address.newBuilder()
-                                                      .setSocketAddress(SocketAddress.newBuilder().setAddress("10.200.10.1").setPortValue(6567)))
-                                     .build()),
+
                       ImmutableList.of(),
+                      ImmutableList.of(
+                              ClusterLoadAssignment.newBuilder()
+                                                   .setClusterName("backend1")
+                                                   .addEndpoints(
+                                                           LocalityLbEndpoints.newBuilder().addLbEndpoints(
+                                                                   LbEndpoint.newBuilder().setEndpoint(endpoint("127.0.0.1", 2000+i))))
+                                                   .build(),
+                              ClusterLoadAssignment.newBuilder()
+                                                   .setClusterName("backend2")
+                                                   .addEndpoints(
+                                                           LocalityLbEndpoints.newBuilder().addLbEndpoints(
+                                                                   LbEndpoint.newBuilder().setEndpoint(endpoint("127.0.0.1", 2000+i))))
+                                                   .build()
+                      ),
                       ImmutableList.of(),
                       ImmutableList.of(),
                       ImmutableList.of(),
