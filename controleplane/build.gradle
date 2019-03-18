@@ -18,7 +18,7 @@ apply plugin: "idea"
 
 
 def grpcVersion = '1.18.0'
-def protobufVersion = '3.6.1'
+def protobufVersion = '3.7.0'
 
 group = 'my.sdtest'
 version = '0.0.1-SNAPSHOT'
