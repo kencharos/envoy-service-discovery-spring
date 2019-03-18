@@ -1,10 +1,75 @@
 # envoy java grpc sample
 
 - [x] static client side load balancing with grpc 
-- [ ] dynamic load balancing and service discovery with xDS control plane.
+- [x] dynamic load balancing and service discovery with xDS control plane.
 - [ ] distribute tracing with envoy
 - [ ] integration with consul sprint cloud config
 - [ ] integration with hashicorp vault
+
+## controlPlane
+
+envoy xDS control server
+
+ports
+
++ 8084: web api
++ 6000: gRPC port for envoy proxies.
+
+### usage
+
+at running, endpoint is empty.
+
+docker alias name does not set in EDS, so that use host network. 
+
+if using Mac, put following command, then replace 127.0.0.1 to 10.200.10.1 .
+
+```
+sudo ifconfig lo0 alias 10.200.10.1/24
+```
+
+POST http://localhost:8084/endpoint these json.
+```
+    {
+      "group":"sample_cluster",
+      "clusters":[
+        {
+          "clusterName":"backend1",
+          "endpoints":[
+              {"address":"127.0.0.1", "port":3001}
+            ]
+        },
+        {
+          "clusterName":"backend2",
+          "endpoints":[
+              {"address":"127.0.0.1", "port":3002}
+            ]
+        }
+      ]
+    }
+```
+
+to loadbalancing backend2
+
+```
+    {
+      "group":"sample_cluster",
+      "clusters":[
+        {
+          "clusterName":"backend1",
+          "endpoints":[
+              {"address":"127.0.0.1", "port":3001}
+            ]
+        },
+        {
+          "clusterName":"backend2",
+          "endpoints":[
+              {"address":"127.0.0.1", "port":3002},
+              {"address":"127.0.0.1", "port":3003}
+            ]
+        }
+      ]
+    }
+```
 
 ## front
 

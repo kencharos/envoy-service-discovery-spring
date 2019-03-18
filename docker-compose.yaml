@@ -1,5 +1,16 @@
 version: '2'
 services:
+  controleplane:
+    build:
+      context: ./controleplane
+    image: controleplane:latest
+    container_name: controleplane
+    environment:
+      - "GRPC_PORT=6000"
+      - "SERVER_PORT=8084"
+    ports:
+      - "6000:6000"
+      - "8084:8084"
   front-proxy:
     build:
       context: ./front-proxy

@@ -69,7 +69,8 @@ public class EDSController {
               .setEndpoint(Endpoint.newBuilder().setAddress(
                       Address.newBuilder().setSocketAddress(
                               SocketAddress.newBuilder().setAddress(e.address).setPortValue(e.port).build()).build()).build())
-              .build()
+
+                   .build()
         ).collect(Collectors.toList());
     }
 

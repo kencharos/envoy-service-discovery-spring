@@ -1,3 +1,6 @@
+node:
+  id: backend1
+  cluster: sample_cluster
 static_resources:
   listeners:
   - address:
@@ -76,36 +79,40 @@ static_resources:
     - socket_address:
         address: backend1-app
         port_value: 6566
-  - name: backend1 #backend1,2は各envoyで共通にできそう
-    http2_protocol_options: {}
+
+  - name: backend1
     connect_timeout: 0.25s
-    type: STRICT_DNS 
-    lb_policy: round_robin
-    health_checks:
-    - timeout: 5s
-      interval: 10s
-      unhealthy_threshold: 2
-      healthy_threshold: 2
-      tcp_health_check: {}
-    hosts:  #この辺を動的にしたい
-    - socket_address: 
-        address: backend1-proxy
-        port_value: 3001
+    lb_policy: ROUND_ROBIN
+    http2_protocol_options: {}
+    type: EDS #edsサーバーからhostの設定を取得する
+    eds_cluster_config:
+      eds_config:
+        api_config_source:
+          api_type: GRPC
+          grpc_services:
+            envoy_grpc:
+              cluster_name: xds_cluster
   - name: backend2
-    http2_protocol_options: {}
     connect_timeout: 0.25s
-    type: STRICT_DNS 
-    lb_policy: round_robin
-    health_checks:
-    - timeout: 5s
-      interval: 10s
-      unhealthy_threshold: 2
-      healthy_threshold: 2
-      tcp_health_check: {}
-    hosts:  #この辺を動的にしたい
-    - socket_address: 
-        address: backend2-proxy
-        port_value: 3002
-    - socket_address: 
-        address: backend2-proxy-b
-        port_value: 3003
+    lb_policy: ROUND_ROBIN
+    http2_protocol_options: {}
+    type: EDS
+    eds_cluster_config:
+      eds_config:
+        api_config_source:
+          api_type: GRPC
+          grpc_services:
+            envoy_grpc:
+              cluster_name: xds_cluster
+  - name: xds_cluster
+    connect_timeout: 0.25s
+    type: STRICT_DNS
+    lb_policy: ROUND_ROBIN
+    http2_protocol_options: {}
+    load_assignment:
+      cluster_name: xds_cluster
+      endpoints:
+        - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address: {address: controleplane, port_value: 6000 }

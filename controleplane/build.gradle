@@ -18,7 +18,7 @@ apply plugin: "idea"
 
 
 def grpcVersion = '1.18.0'
-def protobufVersion = '3.7.0'
+def protobufVersion = '3.6.1'
 
 group = 'my.sdtest'
 version = '0.0.1-SNAPSHOT'
@@ -39,7 +39,9 @@ dependencies {
     compile 'io.github.lognet:grpc-spring-boot-starter:3.1.0'
 
     // https://mvnrepository.com/artifact/io.envoyproxy.controlplane/java-control-plane
-    compile group: 'io.envoyproxy.controlplane', name: 'java-control-plane', version: '0.1.14', ext: 'pom'
+    compile (group: 'io.envoyproxy.controlplane', name: 'java-control-plane', version: '0.1.14') {
+            exclude group: 'io.envoyproxy.controlplane', module: 'java-control-plane-pom'
+    }
     // https://mvnrepository.com/artifact/io.envoyproxy.controlplane/cache
     compile group: 'io.envoyproxy.controlplane', name: 'cache', version: '0.1.14'
     compile group: 'io.envoyproxy.controlplane', name: 'server', version: '0.1.14'
