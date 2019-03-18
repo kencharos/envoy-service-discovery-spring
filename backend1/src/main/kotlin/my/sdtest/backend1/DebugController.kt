@@ -5,6 +5,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.reactor.mono
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 
@@ -12,7 +13,7 @@ import reactor.core.publisher.Mono
 class DebugController {
 
     @GetMapping("/api/debug1")
-    fun hello1():Mono<String> = GlobalScope.mono {
+    fun hello1(@RequestParam(value="name", defaultValue = "Test") name:String):Mono<String> = GlobalScope.mono {
         val chan = ManagedChannelBuilder
                 .forAddress("localhost", 6566)
                 .usePlaintext()
@@ -20,7 +21,7 @@ class DebugController {
 
         val stub = Backend1ServiceGrpc.newStub(chan)
 
-        stub.helloBackend1(B1Request.newBuilder().setMessage("Test").build()).answer
+        stub.helloBackend1(B1Request.newBuilder().setMessage(name).build()).answer
     }
 
     @GetMapping("/api/debug")

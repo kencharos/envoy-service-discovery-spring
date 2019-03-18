@@ -3,3 +3,9 @@ server:
   port: 8082
 grpc:
   port: 6567
+
+spring.datasource:
+  url: jdbc:h2:mem:AZ;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=TRUE
+  driverClassName: org.h2.Driver
+  username: sa
+  password:
