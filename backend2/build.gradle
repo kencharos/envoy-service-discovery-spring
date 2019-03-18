@@ -52,6 +52,17 @@ task cleanProtoGen{
 }
 clean.dependsOn cleanProtoGen
 
+sourceSets {
+    main {
+        proto {
+            // default 'src/main/proto'
+            srcDir '../api/proto'
+            include '**/*.proto' // select target proto file
+        }
+    }
+}
+
+
 protobuf {
     protoc {
         // The artifact spec for the Protobuf Compiler

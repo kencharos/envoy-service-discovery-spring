@@ -1,24 +1,14 @@
 package my.sdtest.backend1
 
-import io.grpc.BindableService
-import io.grpc.MethodDescriptor
-import io.grpc.ServerServiceDefinition
-import io.grpc.Status
-import io.grpc.StatusException
-import io.grpc.StatusRuntimeException
-import io.grpc.stub.ServerCalls
-import io.grpc.stub.StreamObserver
-import io.rouz.grpc.ContextCoroutineContextElement
-import io.rouz.grpc.StreamObserverChannel
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.launch
-import my.sdtest.backend1.Backend1ServiceGrpc.getHelloBackend1Method
-import my.sdtest.backend1.Backend1ServiceGrpc.getHelloBackend1StreamMethod
-import my.sdtest.backend1.Backend1ServiceGrpc.getServiceDescriptor
-import kotlin.coroutines.CoroutineContext
+import my.sdtest.backend1.Backend1ServiceGrpc.*
+
+import io.grpc.*
+import io.grpc.stub.*
+import io.rouz.grpc.*
+
+import kotlin.coroutines.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
 
 /**
      * <pre>

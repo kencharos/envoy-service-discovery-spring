@@ -1,9 +1,9 @@
 package my.sdtest.backend1
 
-import io.rouz.grpc.ContinuationStreamObserver
-import io.rouz.grpc.ManyToManyCall
-import io.rouz.grpc.StreamObserverChannel
+import io.rouz.grpc.*
 import my.sdtest.backend1.Backend1ServiceGrpc.Backend1ServiceStub
+
+import kotlinx.coroutines.channels.ReceiveChannel
 import kotlin.coroutines.suspendCoroutine
 
 /**

@@ -2,15 +2,9 @@ package io.rouz.grpc
 
 import io.grpc.Context
 import io.grpc.stub.StreamObserver
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.ThreadContextElement
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
 
 class ManyToOneCall<in TRequest, out TResponse>(
     private val request: StreamObserver<TRequest>,
