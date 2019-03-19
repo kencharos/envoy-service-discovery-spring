@@ -9,3 +9,14 @@ spring.datasource:
   driverClassName: org.h2.Driver
   username: sa
   password:
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - prometheus
+  endpoint:
+    prometheus:
+      enabled: true

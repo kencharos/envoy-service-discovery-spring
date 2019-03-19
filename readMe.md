@@ -116,3 +116,18 @@ backend2-cluster in envoy loadbalances　backend2-proxy and backend2-proxy-b
     + http 8083
     + grpc 6568
 
+
+# monitoring
+
+`docker-compose  -d -f docker-compose-monitoring.yaml up`
+
++ zipkin 9411
++ prometheus 9090
++ grafana 3100
+
+## grafana + prometheus
+
+accsee localhost:3100, create datasource for prometheus.
+set 127.0.0.1:9090, or 10.200.10.1:9090 (mac).
+in dashbbord section, import prometheus dashboads.
+
