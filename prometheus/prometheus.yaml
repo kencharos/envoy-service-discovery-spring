@@ -12,3 +12,28 @@ scrape_configs:
     static_configs:
       - targets: 
         - 'localhost:9090'
+  
+  - job_name: 'front-envoy'
+    metrics_path: /stats/prometheus
+    static_configs:
+      - targets: 
+        - '10.200.10.1:10001'
+  - job_name: 'backend1-envoy'
+    metrics_path: /stats/prometheus
+    static_configs:
+      - targets: 
+        - '10.200.10.1:10002'
+  - job_name: 'backend2-envoy'
+    metrics_path: /stats/prometheus
+    static_configs:
+      - targets: 
+        - '10.200.10.1:10003'
+        - '10.200.10.1:10004'
+  - job_name: 'backend2-app'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: 
+        - '10.200.10.1:8082'
+        - '10.200.10.1:8083'
+
+        

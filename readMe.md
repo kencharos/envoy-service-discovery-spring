@@ -92,6 +92,7 @@ to loadbalancing backend2
 + backend1-proxy
     + ingress 3001
     + egress 8001 (to backend2)
+    + admin 10002
 + backend1-app
     + http 8081
     + grpc 6566
@@ -101,6 +102,7 @@ to loadbalancing backend2
 
 + backend2-proxy
     + ingress 3002
+    + admin 10003
 + backend2-app
     + http 8082
     + grpc 6567
@@ -112,6 +114,7 @@ backend2-cluster in envoy loadbalances　backend2-proxy and backend2-proxy-b
 
 + backend2-proxy-b
     + ingress 3003
+    + admin 10004
 + backend2-app-b
     + http 8083
     + grpc 6568

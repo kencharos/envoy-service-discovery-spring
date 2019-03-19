@@ -39,6 +39,7 @@ services:
     ports:
       - "3001:3001"
       - "8001:8001"
+      - "10002:10002"
   backend1-app:
     build:
       context: ./backend1
@@ -60,6 +61,7 @@ services:
     ports:
       - "3002:3002"
       - "8002:8002"
+      - "10003:10003"
   backend2-app:
     build:
       context: ./backend2
@@ -78,6 +80,7 @@ services:
     ports:
       - "3003:3003"
       - "8003:8003"
+      - "10004:10004"
   backend2-app-b:
     build:
       context: ./backend2
