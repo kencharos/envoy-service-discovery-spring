@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import brave.grpc.GrpcTracing;
 import my.sdtest.backend1.B1Request;
 import my.sdtest.backend1.ReactorBackend1ServiceGrpc;
 import my.sdtest.backend1.ReactorBackend1ServiceGrpc.ReactorBackend1ServiceStub;

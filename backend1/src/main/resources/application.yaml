@@ -5,3 +5,12 @@ grpc:
   backend2:
     host: 127.0.0.1
     port: 6567
+
+spring:
+  application:
+    name: backend1
+  zipkin:
+    baseUrl: http://10.200.10.1:9411/
+  sleuth:
+    sampler:
+      probability: 1.0

@@ -3,3 +3,12 @@ server.port: 8080
 grpc:
   host: 127.0.0.1
   port: 6565
+
+spring:
+  application:
+    name: front
+  zipkin:
+    baseUrl: http://10.200.10.1:9411/
+  sleuth:
+    sampler:
+      probability: 1.0

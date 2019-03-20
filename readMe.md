@@ -2,8 +2,12 @@
 
 - [x] static client side load balancing with grpc 
 - [x] dynamic load balancing and service discovery with xDS control plane.
-- [ ] distribute tracing with envoy
+- [x] distribute tracing with envoy
+  - [ ] distribute tracing with java brave
+- [x] prometheus, grafana, micrometer custom metrics
 - [ ] integration with consul sprint cloud config
+- [ ] prometheus service discovery from consul
+  - [ ] envoy cds, join dynamic cluster config.
 - [ ] integration with hashicorp vault
 
 ## controlPlane
