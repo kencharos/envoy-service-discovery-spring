@@ -2,8 +2,8 @@
 
 - [x] static client side load balancing with grpc 
 - [x] dynamic load balancing and service discovery with xDS control plane.
-- [x] distribute tracing with envoy
-  - [ ] distribute tracing with java brave
+- [x] ~~distribute tracing with envoy~~ (envoy tracing cannot header propagation, so that use seleuth at each services)
+- [x] distribute tracing with spring seleuth
 - [x] prometheus, grafana, micrometer custom metrics
 - [ ] integration with consul sprint cloud config
 - [ ] prometheus service discovery from consul
