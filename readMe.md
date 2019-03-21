@@ -32,6 +32,7 @@ sudo ifconfig lo0 alias 10.200.10.1/24
 ```
 
 POST http://localhost:8084/endpoint these json.
+(or set consul key value store of `key envoy/eds`)
 ```
     {
       "group":"sample_cluster",

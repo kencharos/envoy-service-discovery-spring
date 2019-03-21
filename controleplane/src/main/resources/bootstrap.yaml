@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: controleplane
@@ -5,3 +6,4 @@ spring:
     consul:
       discovery:
         instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        tags: type=app, envoy=10001

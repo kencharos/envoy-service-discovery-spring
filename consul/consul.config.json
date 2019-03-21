@@ -6,10 +6,15 @@
     "server": true,
     "watches": [
         {
-            "type": "keyprefix",
-            "prefix": "hoge/",
-            "handler_type": "script",
-            "args": ["/tmp/consul/hoge.sh"]
+            "type": "key",
+            "key": "envoy/eds",
+            "handler_type": "http",
+            "http_handler_config": {
+                "path":"http://10.200.10.1:8084/endpoint/consul",
+                "method": "POST",
+                "timeout": "10s",
+                "tls_skip_verify": true
+            }
         }
     ]
   }

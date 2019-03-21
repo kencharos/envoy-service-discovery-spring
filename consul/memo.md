@@ -81,7 +81,10 @@ consul サーバーが起動している前提で、
 promethues を考えると envoy の metricsも送れるように envoy も登録したい。
 envoy はサイドカーとして consul agent と常にノードごとにペアで配置される想定なので、
 最初から consul の設定ファイルに監視対象として入れるのが本番なら楽。
+
 今回は、controleplane に接続してきた envoy の情報を consul API 経由でサービス登録する。
+(-> これは無理。 admin port を xDSで取得する手段がなく、手動で設定が必要になる。
+  あとは service discovery に登録されたサービスの内容から、sidecar のサービスを類推して登録するようなスクリプトを書く方法もある)
 
 また、ヘルスチェックのためには、 actuator の設定が必要。
 
