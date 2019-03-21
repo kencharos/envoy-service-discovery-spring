@@ -11,8 +11,6 @@ spring.datasource:
   password:
 
 spring:
-  application:
-    name: backend2
   zipkin:
     baseUrl: http://10.200.10.1:9411/
   sleuth:

@@ -49,8 +49,7 @@ dependencies {
 
     // consul, config
     compile "org.springframework.cloud:spring-cloud-starter-consul-discovery"
-
-
+    compile "org.springframework.cloud:spring-cloud-starter-consul-config"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'

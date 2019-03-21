@@ -54,6 +54,10 @@ dependencies {
     compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.1.1'
     compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-reactor', version: '1.1.1'
 
+    // consul, config
+    compile "org.springframework.cloud:spring-cloud-starter-consul-discovery"
+    compile "org.springframework.cloud:spring-cloud-starter-consul-config"
+
 
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

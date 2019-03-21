@@ -10,6 +10,12 @@
   - [ ] envoy cds, join dynamic cluster config.
 - [ ] integration with hashicorp vault
 
+## consul
+
+NOTE. consul run local. I doesn't know to run consul in docker...
+
+`consul agent --config-dir consul --ui --dev --client=0.0.0.0`
+
 ## controlPlane
 
 envoy xDS control server
@@ -26,6 +32,8 @@ at running, endpoint is empty.
 docker alias name does not set in EDS, so that use host network. 
 
 if using Mac, put following command, then replace 127.0.0.1 to 10.200.10.1 .
+
+POST http://localhost:8084/sidecar for sidecar register to consul
 
 ```
 sudo ifconfig lo0 alias 10.200.10.1/24

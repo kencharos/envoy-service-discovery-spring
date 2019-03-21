@@ -118,7 +118,11 @@ public class EDSController {
                 s.setPort(sv.getServiceTags().stream().filter(t -> t.startsWith("envoy="))
                             .mapToInt(t-> Integer.parseInt(t.split("=")[1])).sum());
                 s.setTags(List.of("type=proxy"));
-                consul.agentServiceRegister(s);
+                try {
+                    consul.agentServiceRegister(s).getValue();
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
         });
 

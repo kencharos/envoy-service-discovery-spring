@@ -1,12 +1,12 @@
 
 spring:
   application:
-    name: controleplane
+    name: backend2
   cloud:
     consul:
       discovery:
         instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
-        tags: type=controlPlane
+        tags: type=app, envoy=10003
         prefer-ip-address: true
       host: 10.200.10.1
-
+#SPRING_CLOUD_CONSUL_DISCOVERY_TAGS=type=app, envoy=10003

@@ -1,8 +1,8 @@
 {
-    "datacenter": "dc1",
+    "datacenter": "local",
     "data_dir": "/tmp/consul",
     "log_level": "INFO",
-    "node_name": "test",
+    "node_name": "test_master",
     "server": true,
     "watches": [
         {

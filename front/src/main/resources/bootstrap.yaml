@@ -1,12 +1,11 @@
-
 spring:
   application:
-    name: controleplane
+    name: front
   cloud:
     consul:
       discovery:
         instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
-        tags: type=controlPlane
+        tags: type=app, envoy=10001
         prefer-ip-address: true
       host: 10.200.10.1
 
