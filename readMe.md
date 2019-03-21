@@ -5,7 +5,7 @@
 - [x] ~~distribute tracing with envoy~~ (envoy tracing cannot header propagation, so that use seleuth at each services)
 - [x] distribute tracing with spring seleuth
 - [x] prometheus, grafana, micrometer custom metrics
-- [ ] integration with consul sprint cloud config
+- [x] integration with consul KVStore and spring cloud config
 - [ ] prometheus service discovery from consul
   - [ ] envoy cds, join dynamic cluster config.
 - [ ] integration with hashicorp vault

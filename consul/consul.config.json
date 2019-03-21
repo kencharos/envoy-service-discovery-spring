@@ -1,0 +1,15 @@
+{
+    "datacenter": "dc1",
+    "data_dir": "/tmp/consul",
+    "log_level": "INFO",
+    "node_name": "test",
+    "server": true,
+    "watches": [
+        {
+            "type": "keyprefix",
+            "prefix": "hoge/",
+            "handler_type": "script",
+            "args": ["/tmp/consul/hoge.sh"]
+        }
+    ]
+  }

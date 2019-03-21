@@ -28,7 +28,13 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Greenwich.RELEASE"
+    }
+}
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     //runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 
@@ -46,6 +52,9 @@ dependencies {
     compile group: 'io.envoyproxy.controlplane', name: 'cache', version: '0.1.14'
     compile group: 'io.envoyproxy.controlplane', name: 'server', version: '0.1.14'
 
+    // consul, config
+    compile "org.springframework.cloud:spring-cloud-starter-consul-discovery"
+    compile "org.springframework.cloud:spring-cloud-starter-consul-config"
 
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
