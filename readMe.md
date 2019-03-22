@@ -6,7 +6,7 @@
 - [x] distribute tracing with spring seleuth
 - [x] prometheus, grafana, micrometer custom metrics
 - [x] integration with consul KVStore and spring cloud config
-- [ ] prometheus service discovery from consul
+- [x] prometheus service discovery from consul
   - [ ] envoy cds, join dynamic cluster config.
 - [ ] integration with hashicorp vault
 
@@ -38,9 +38,9 @@ POST http://localhost:8084/sidecar for sidecar register to consul
 ```
 sudo ifconfig lo0 alias 10.200.10.1/24
 ```
-
-POST http://localhost:8084/endpoint these json.
-(or set consul key value store of `key envoy/eds`)
+set consul key value store of `key envoy/eds` these json.
+( or POST http://localhost:8084/endpoint these json.)
+TODO:  contorleplane cache load first this value on running..
 ```
     {
       "group":"sample_cluster",

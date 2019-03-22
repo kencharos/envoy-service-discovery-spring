@@ -46,7 +46,8 @@ dependencies {
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "com.salesforce.servicelibs:reactor-grpc-stub:${reactiveGrpcVersion}"
     compile 'io.github.lognet:grpc-spring-boot-starter:3.1.0'
-
+// https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus
+    compile group: 'io.micrometer', name: 'micrometer-registry-prometheus'
 
     // distribute tracing deps
     compile "org.springframework.cloud:spring-cloud-starter-zipkin"

@@ -91,7 +91,6 @@ public class EDSController {
 
     }
 
-    @PostConstruct
     void registerEnvoy() {
         System.out.println("register side car to consul ");
 
@@ -102,19 +101,23 @@ public class EDSController {
         var apps = services.entrySet().stream().filter(e -> e.getValue().contains("type=app"))
                 .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
 
-        var proxies = services.keySet().stream().filter(s -> s.endsWith("-proxy")).map(s -> s.substring(0, s.lastIndexOf("-")));
-
-        proxies.forEach(n -> apps.remove(n));
+        var proxies = services.keySet().stream()
+                              .filter(s -> s.endsWith("-proxy"))
+                              .map(s -> s.substring(0, s.lastIndexOf("-")))
+                              .collect(Collectors.toSet());
 
         apps.forEach((name, tags) -> {
             consul.getCatalogService(name, QueryParams.DEFAULT).getValue().forEach(sv->{
-                System.out.println("register " + name + "-proxy");
+                if (proxies.contains(sv.getServiceName())) {
+                    System.out.println("update " + name + "-proxy");
+                } else {
+                    System.out.println("register " + name + "-proxy");
+                }
 
                 var s = new NewService();
-                s.setId(sv.getId()+"-proxy");
+                s.setId(sv.getServiceId()+"-proxy");
                 s.setName(sv.getServiceName()+"-proxy");
-                s.setEnableTagOverride(true);
-                s.setAddress(sv.getAddress());
+                s.setAddress(sv.getServiceAddress());
                 s.setPort(sv.getServiceTags().stream().filter(t -> t.startsWith("envoy="))
                             .mapToInt(t-> Integer.parseInt(t.split("=")[1])).sum());
                 s.setTags(List.of("type=proxy"));

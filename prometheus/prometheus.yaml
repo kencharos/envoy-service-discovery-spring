@@ -8,18 +8,27 @@ rule_files:
 #   - "/var/app/prometheus/alert.rules"
 
 scrape_configs:
-  - job_name: 'prometheus'
-    static_configs:
-      - targets: 
-        - 'localhost:9090'
-  
+  #- job_name: 'prometheus'
+  #  static_configs:
+  #    - targets: 
+  #      - 'localhost:9090'
   - job_name: 'app'
     metrics_path: /actuator/prometheus
     consul_sd_configs:
       - server: '10.200.10.1:8500'
-      - tag: "type=app"
+    relabel_configs:
+      - source_labels: [__meta_consul_tags] #filtering services by tag
+        regex: .*,type=app,.*
+        action: keep
+      - source_labels: [__meta_consul_service] #set consule service name as prometheus job
+        target_label: job
   - job_name: 'envoy'
     metrics_path: /stats/prometheus
     consul_sd_configs:
       - server: '10.200.10.1:8500'
-      - tag: "type=proxy"
+    relabel_configs:
+      - source_labels: [__meta_consul_tags]
+        regex: .*,type=proxy,.*
+        action: keep
+      - source_labels: [__meta_consul_service]
+        target_label: job
