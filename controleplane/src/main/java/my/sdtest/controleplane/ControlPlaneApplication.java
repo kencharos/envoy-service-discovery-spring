@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 
 import com.ecwid.consul.v1.ConsulClient;
@@ -15,7 +16,7 @@ import io.envoyproxy.controlplane.cache.SimpleCache;
 
 @SpringBootApplication
 @GRpcService // fake for auto configure gRPC Boot Starter。
-@EnableConfigurationProperties(SomethingValue.class)
+@EnableConfigurationProperties({SomethingValue.class, SensitiveValue.class})
 public class ControlPlaneApplication {
 
     public static void main(String[] args) {

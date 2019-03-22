@@ -9,4 +9,10 @@ spring:
         tags: type=controlPlane
         prefer-ip-address: true
       host: 10.200.10.1
+    vault:
+      authentication: TOKEN
+      scheme: http
+      token: "00000000-0000-0000-0000-000000000000"
+      config:
+        order: -10
 
