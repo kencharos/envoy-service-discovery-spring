@@ -14,7 +14,7 @@
 
 NOTE. consul run local. I doesn't know to run consul in docker...
 
-`consul agent --config-dir consul --ui --dev --client=0.0.0.0`
+`consul agent --config-dir=consul --ui --dev --client=0.0.0.0`
 
 `vault server --config consul-vault/vault-conf.hcl`
 set up vault ref to [consul-vault/readme.md](./consul-vault/readme.md)

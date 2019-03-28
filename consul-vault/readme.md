@@ -14,11 +14,12 @@ vault operater unseal
 vault operater unseal
 vault operater unseal
 
+export VAULT_ADDR=http://127.0.0.1:8200  # for http access.
 export VAULT_TOKEN=<roottoken>
 vault secrets enable kv #path default kv/
 vault secrets enable --path=secret/  kv
 # create token for test
-vault toult token create --id=00000000-0000-0000-0000-000000000000 --policy=root
+vault  token create --id=00000000-0000-0000-0000-000000000000 --policy=root
 ```
 
 ## note
