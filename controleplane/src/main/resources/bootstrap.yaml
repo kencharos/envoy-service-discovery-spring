@@ -10,9 +10,12 @@ spring:
         prefer-ip-address: true
       host: 10.200.10.1
     vault:
+      kv:
+        enabled: true # for KevValue Store V2.
       authentication: TOKEN
       scheme: http
       token: "00000000-0000-0000-0000-000000000000"
       config:
         order: -10
+      host: 10.200.10.1
 

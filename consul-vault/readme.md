@@ -10,14 +10,13 @@ initial setup　(https://www.vaultproject.io/docs/commands/operator/generate-roo
 vault operator init
 #-- save root token. unseal tokens
 # input  unseal key three times.
+export VAULT_ADDR=http://127.0.0.1:8200  # for http access.
+export VAULT_TOKEN=<roottoken>
 vault operater unseal 
 vault operater unseal
 vault operater unseal
 
-export VAULT_ADDR=http://127.0.0.1:8200  # for http access.
-export VAULT_TOKEN=<roottoken>
-vault secrets enable kv #path default kv/
-vault secrets enable --path=secret/  kv
+vault secrets enable --path=secret/  kv-v2
 # create token for test
 vault  token create --id=00000000-0000-0000-0000-000000000000 --policy=root
 ```

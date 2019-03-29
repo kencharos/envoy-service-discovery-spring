@@ -9,6 +9,7 @@ services:
       - "GRPC_PORT=6000"
       - "SERVER_PORT=8084"
       - "SPRING_CLOUD_CONSUL_DISCOVERY_IP-ADDRESS=10.200.10.1" # dockerの内部IPを上書きする
+      - "SPRING_CLOUD_VAULT_HOST=10.200.10.1"
     ports:
       - "6000:6000"
       - "8084:8084"

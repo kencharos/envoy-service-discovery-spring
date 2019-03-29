@@ -72,6 +72,7 @@ public class EDSController {
     @PostMapping("/endpoint/consul")
     public void updateEndpointsFromConsul(@RequestBody JsonNode kv) throws IOException {
 
+        System.out.println("call from consul watch");
         String base64Value = kv.get("Value").asText();
 
         updateEndpoints(mapper.readValue(Base64.getDecoder().decode(base64Value.getBytes()), EndpointConfig.class));

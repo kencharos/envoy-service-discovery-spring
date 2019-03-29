@@ -19,12 +19,11 @@ NOTE. consul run local. I doesn't know to run consul in docker...
 `vault server --config consul-vault/vault-conf.hcl`
 set up vault ref to [consul-vault/readme.md](./consul-vault/readme.md)
 
-(optional) set vault kv
+set vault kv
 
 ```
 vault kv put secret/controleplane sensitive.description=secretdescription
 vault kv put secret/application sensitive.user=secretuser sensitive.pass=secretpath
-
 ```
 
 
